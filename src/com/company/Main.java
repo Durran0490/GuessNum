@@ -62,6 +62,7 @@ public class Main {
 
     static boolean choseOption(String msg) {
         while (true) {
+            System.out.println(msg);
             String option = scn.next();
             boolean isY = option.equalsIgnoreCase("y");
             boolean isN = option.equalsIgnoreCase("n");
