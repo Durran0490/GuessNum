@@ -72,18 +72,15 @@ public class Main {
         }
     }
 
-    static String userName (String msg){
+    static String userName(String msg) {
         System.out.println(msg);
-        while(true) {
-            try {
+        while (true) {
                 String name = scn.nextLine();
-                System.out.println("Welcome");
-                    return name;
-            } catch (InputMismatchException ex){
-                System.out.println("use only letters");
-                scn.next();
+                System.out.println("Welcome!");
+                return name;
             }
         }
     }
-}
+
+
 
