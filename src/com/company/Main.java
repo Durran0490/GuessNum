@@ -14,12 +14,13 @@ public class Main {
         int myNum = rand.nextInt(100) + 1;
         boolean answer;
         String PlayerName = userName("What is your name?\n" +
-                "(please input at least to characters without spaces)", 3, 10);
+                "(please input from 3 to 10 characters without spaces)", 3, 10);
 
         do {
             boolean userWon = false;
 
             for (int i = 0; i < 10; i++) {
+                int n = 9;
                 int userNum = askInt("Enter your guess: ", 1, 100);
 
                 if (userNum == myNum) {
@@ -28,9 +29,9 @@ public class Main {
                     System.out.println("Congratulations, you are right!");
                     break;
                 } else if (myNum > userNum) {
-                    System.out.println("Number is greater\n Your attempt: " + (i + 1));
+                    System.out.println("Number is greater\n Attempts left: " + (n - i));
                 } else if (myNum < userNum) {
-                    System.out.println("Number is smaller\n Your attempt: " + (i + 1));
+                    System.out.println("Number is smaller\n Attempts left: " + (n - i));
                 }
             }
 
