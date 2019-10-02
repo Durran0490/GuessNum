@@ -6,19 +6,20 @@ import java.util.Scanner;
 
 public class Main {
 
-    static Random rand = new Random(5);
+    static Random rand = new Random();
     static Scanner scn = new Scanner(System.in);
 
     public static void main(String[] args) {
 
         int myNum = rand.nextInt(100) + 1;
         boolean answer;
-        String PlayerName = userName("What is your name?\n(please input at least three characters without spaces)", 3, 10);
+        String PlayerName = userName("What is your name?\n" +
+                "(please input at least to characters without spaces)", 3, 10);
 
         do {
             boolean userWon = false;
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 10; i++) {
                 int userNum = askInt("Enter your guess: ", 1, 100);
 
                 if (userNum == myNum) {
@@ -27,9 +28,9 @@ public class Main {
                     System.out.println("Congratulations, you are right!");
                     break;
                 } else if (myNum > userNum) {
-                    System.out.println("Number is greater");
+                    System.out.println("Number is greater\n Your attempt: " + (i + 1));
                 } else if (myNum < userNum) {
-                    System.out.println("Number is smaller");
+                    System.out.println("Number is smaller\n Your attempt: " + (i + 1));
                 }
             }
 
@@ -76,7 +77,7 @@ public class Main {
         System.out.println(msg);
         while (true) {
             String name = scn.nextLine();
-            name = name.replaceAll("\\s+","");
+            name = name.replaceAll("\\s+", "");
             int nameLength = name.length();
 
             if (nameLength > max) {
