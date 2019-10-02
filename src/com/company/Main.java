@@ -13,7 +13,7 @@ public class Main {
 
         int myNum = rand.nextInt(100) + 1;
         boolean answer;
-        String PlayerName = userName("What is your name?\n(please input at least three characters)", 3, 10);
+        String PlayerName = userName("What is your name?\n(please input at least three characters without spaces)", 3, 10);
 
         do {
             boolean userWon = false;
@@ -76,6 +76,7 @@ public class Main {
         System.out.println(msg);
         while (true) {
             String name = scn.nextLine();
+            name = name.replaceAll("\\s+","");
             int nameLength = name.length();
 
             if (nameLength > max) {
