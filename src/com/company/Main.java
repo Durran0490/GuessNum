@@ -9,39 +9,42 @@ public class Main {
     static Random rand = new Random();
     static Scanner scn = new Scanner(System.in);
 
+    //--Main body
+
     public static void main(String[] args) {
 
-        int myNum = rand.nextInt(100) + 1;
-        boolean answer;
-        String PlayerName = userName("What is your name?\n" +
+        String PlayerName = userName("Hello and Welcome!\nWhat's your name?\n" +
                 "(please input from 3 to 10 characters without spaces)", 3, 10);
 
         do {
+            int myNum = rand.nextInt(100) + 1;
             boolean userWon = false;
+            int NumOfAttempts = 9;
 
-            for (int i = 0; i < 10; i++) {
-                int n = 9;
+            for (int i = 0; i <= NumOfAttempts; i++) {
                 int userNum = askInt("Enter your guess: ", 1, 100);
 
                 if (userNum == myNum) {
                     userWon = true;
-                    System.out.println("Number is: " + myNum + " !");
+                    System.out.println("Number is " + myNum + " !");
                     System.out.println("Congratulations, you are right!");
                     break;
                 } else if (myNum > userNum) {
-                    System.out.println("Number is greater\n Attempts left: " + (n - i));
+                    System.out.println("Number is greater\n Attempts left: " + (NumOfAttempts - i));
                 } else if (myNum < userNum) {
-                    System.out.println("Number is smaller\n Attempts left: " + (n - i));
+                    System.out.println("Number is smaller\n Attempts left: " + (NumOfAttempts - i));
                 }
             }
 
             if (!userWon) {
-                System.out.println("Number is: " + myNum + "!");
+                System.out.println("Number is " + myNum + "!");
                 System.out.println("Sorry, you're out of luck");
             }
-        } while (choseOption("Do you want to play more? (Y/N)"));
+        } while (choseOption("Do you want to play again? (Y/N)"));
         System.out.println("Goodbye " + '"' + PlayerName + '"' + "!");
     }
+
+    //--Asking and checking if it's a number from a player
 
     static int askInt(String msg, int min, int max) {
         while (true) {
@@ -60,6 +63,8 @@ public class Main {
         }
     }
 
+    //--Checking for specific strings if player wants to continue
+
     static boolean choseOption(String msg) {
         while (true) {
             System.out.println(msg);
@@ -74,11 +79,13 @@ public class Main {
         }
     }
 
+    //--Asking player's name
+
     static String userName(String msg, int min, int max) {
         System.out.println(msg);
         while (true) {
             String name = scn.nextLine();
-            name = name.replaceAll("\\s+", "");
+            name.replaceAll("\\s+", "");
             int nameLength = name.length();
 
             if (nameLength > max) {
@@ -86,7 +93,7 @@ public class Main {
             } else if (nameLength < min) {
                 System.out.printf("Sorry, but your name is to short!\nPlease input at least %d characters\n", min);
             } else {
-                System.out.println("Welcome " + '"' + name + '"' + "!");
+                System.out.println("Greetings " + '"' + name + '"' + "!");
                 return name;
             }
         }
