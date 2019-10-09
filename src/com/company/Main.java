@@ -11,13 +11,15 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
+        int playerMaxTurns = 10;
 
-        String playerName = askPlayerName("What's your name?\n" +
-                "(min 3 characters without spaces)", 3, 15);
+        System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
+        System.out.printf("Try to guess the number from 1 to 100 in less than %d turns\n\n", playerMaxTurns);
+
+        String playerName = askPlayerName("What's your name?\n",3,15);
 
         do {
-            playGame(10);
+             playGame(playerMaxTurns);
         } while (choseOption("Do you want to play again? (Y/N)"));
         System.out.println("Goodbye " + '"' + playerName + '"' + " !");
     }
@@ -28,8 +30,7 @@ public class Main {
         boolean userWon = false;
 
         for (int i = 0; i < numOfAttempts; i++) {
-            System.out.print("Try " + (i + 1) + ": ");
-            int userNum = askInt("Enter your guess: ", 1, 100);
+            int userNum = askInt("Enter your guess: ", 1, 100, i);
 
             if (userNum == myNum) {
                 userWon = true;
@@ -52,10 +53,10 @@ public class Main {
 
     //--Asking and checking if it's a number, from a player
 
-    static int askInt(String msg, int min, int max) {
+    static int askInt(String msg, int min, int max, int attempt) {
         while (true) {
             try {
-                System.out.println(msg);
+                System.out.println("Turn " + (attempt + 1) + ". " + msg);
                 int answer = scn.nextInt();
 
                 if (answer >= min && answer <= max) {
@@ -65,7 +66,7 @@ public class Main {
                 System.out.println("It isn't a number!");
                 scn.next();
             }
-            System.out.printf("Please enter number from %d to %d\n", min, max);
+            System.out.printf("ERROR! Please enter number from %d to %d!\n", min, max);
         }
     }
 
@@ -90,17 +91,17 @@ public class Main {
     static String askPlayerName(String msg, int min, int max) {
         System.out.println(msg);
         while (true) {
-            String name = scn.nextLine();
-            name.replaceAll("\\s+", "");
-            int nameLength = name.length();
+            String inputName = scn.nextLine();
+            String userName = inputName.replace(" ", "");
+            int nameLength = userName.length();
 
             if (nameLength > max) {
                 System.out.printf("Sorry, but your name is to long!\nPlease input less than a %d characters\n", max);
             } else if (nameLength < min) {
                 System.out.printf("Sorry, but your name is to short!\nPlease input at least %d characters\n", min);
             } else {
-                System.out.println("Greetings " + '"' + name + '"' + "!\n");
-                return name;
+                System.out.println("Greetings " + '"' + userName + '"' + "!\n");
+                return userName;
             }
         }
     }
