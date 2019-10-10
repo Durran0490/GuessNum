@@ -11,15 +11,15 @@ public class Main {
 
 
     public static void main(String[] args) {
-        int playerMaxTurns = 10;
+        int numOfAttempts = 10;
 
         System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
-        System.out.printf("Try to guess the number from 1 to 100 in less than %d turns\n\n", playerMaxTurns);
+        System.out.printf("Try to guess the number from 1 to 100 in less than %d turns\n\n", numOfAttempts);
 
-        String playerName = askPlayerName("What's your name?\n",3,15);
+        String playerName = askPlayerName("What's your name?", 3, 15);
 
         do {
-             playGame(playerMaxTurns);
+            playGame(numOfAttempts);
         } while (choseOption("Do you want to play again? (Y/N)"));
         System.out.println("Goodbye " + '"' + playerName + '"' + " !");
     }
