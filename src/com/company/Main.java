@@ -13,10 +13,13 @@ public class Main {
 
         System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
         System.out.printf("Try to guess the number from 1 to 100 in less than %d turns\n\n", numOfAttempts);
+        System.out.printf("Press ENTER key to START!");
 
         do {
 
-            String playerName = askPlayerName("What's your name?", 3, 15);
+            scn.nextLine();
+            String playerName = askPlayerName("What's your name?\n" +
+                    "Please enter word without spaces", 3, 15);
 
             int myNum = rand.nextInt(100) + 1;
             boolean userWon = false;
