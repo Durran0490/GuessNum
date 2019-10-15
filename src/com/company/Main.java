@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.*;
+import java.io.*;
 
 public class Main {
 
@@ -13,7 +14,7 @@ public class Main {
 
         System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
         System.out.printf("Try to guess the number from 1 to 100 in less than %d turns\n\n", numOfAttempts);
-        System.out.printf("Press ENTER key to START!");
+        System.out.print("Press ENTER key to START!");
 
         do {
 
@@ -58,17 +59,39 @@ public class Main {
 
         } while (choseOption("Do you want to play again? (Y/N)"));
 
-        users.sort(Comparator.comparing(GameResult::getTriesCount)
-                        .thenComparing(GameResult::getUserTime));
+        showResults();
+        //showResults2();
+        saveResults();
 
-        for (GameResult result : users) {
-            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
-                    result.getName(), result.getTriesCount(), (result.getUserTime() /1000.0));
-        }
         System.out.println("Goodbye !");
     }
 
-       //--Asking and checking if it's a number, from a player
+    private static void showResults2() {
+        users.stream()
+                .sorted(Comparator
+                        .comparingInt(GameResult::getTriesCount)
+                        .thenComparing(GameResult::getUserTime))
+                .limit(3)
+                .forEach(r -> System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
+                        r.getName(),
+                        r.getTriesCount(),
+                        r.getUserTime() / 1000.0));
+    }
+
+    private static void showResults() {
+        users.sort(Comparator
+                .comparing(GameResult::getTriesCount)
+                .thenComparing(GameResult::getUserTime));
+
+        for (GameResult result : users) {
+            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
+                    result.getName(),
+                    result.getTriesCount(),
+                    result.getUserTime() / 1000.0);
+        }
+    }
+
+    //--Asking and checking if it's a number, from a player
     static int askInt(String msg, int min, int max, int attempt) {
         while (true) {
             try {
@@ -111,7 +134,7 @@ public class Main {
 
             if (nameLength > max) {
                 System.out.printf("Sorry, but your name is to long!\nPlease input less than a %d characters\n", max);
-                } else if (nameLength < min) {
+            } else if (nameLength < min) {
                 System.out.printf("Sorry, but your name is to short!\nPlease input at least %d characters\n", min);
             } else {
                 System.out.println("Greetings " + '"' + userName + '"' + "!\n");
@@ -120,7 +143,21 @@ public class Main {
         }
     }
 
+    static void saveResults() {
+        File file = new File("myfile.txt");
+        try (PrintWriter out = new PrintWriter(file)) {
+            for (GameResult result : users) {
+                out.printf("%s \t\t %d\t %f sec.\n",
+                        result.getName(),
+                        result.getTriesCount(),
+                        result.getUserTime() / 1000.0);
+            }
+        } catch (IOException e) {
+        }
+    }
 }
+
+
 
 
 
