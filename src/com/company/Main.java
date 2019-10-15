@@ -57,11 +57,15 @@ public class Main {
             }
 
         } while (choseOption("Do you want to play again? (Y/N)"));
+        Comparator<GameResult> compare = Comparator
+                .comparing(GameResult::getTriesCount)
+                .thenComparing(GameResult::getUserTime);
 
-        users.sort(Comparator.comparing(r ->  r.triesCount));
+        Collections.sort(users, compare);
 
         for (GameResult result : users) {
-            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n", result.name, result.triesCount, (result.userTime /1000.0));
+            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
+                    result.name, result.triesCount, (result.userTime /1000.0));
         }
         System.out.println("Goodbye !");
     }

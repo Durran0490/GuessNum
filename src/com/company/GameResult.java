@@ -5,4 +5,11 @@ public class GameResult {
     int triesCount;
     long userTime;
 
+    public int getTriesCount() {
+        return triesCount;
+    }
+
+    public long getUserTime(){
+        return userTime;
+    }
 }
