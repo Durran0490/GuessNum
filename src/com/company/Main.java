@@ -39,9 +39,9 @@ public class Main {
                     System.out.println("Congratulations, you are right!");
 
                     GameResult r = new GameResult();
-                    r.name = playerName;
-                    r.triesCount = i + 1;
-                    r.userTime = timeStop - timeStart;
+                    r.setName(playerName);
+                    r.setTriesCount(i + 1);
+                    r.setUserTime(timeStop - timeStart);
                     users.add(r);
                     break;
                 } else if (myNum > userNum) {
@@ -57,15 +57,13 @@ public class Main {
             }
 
         } while (choseOption("Do you want to play again? (Y/N)"));
-        Comparator<GameResult> compare = Comparator
-                .comparing(GameResult::getTriesCount)
-                .thenComparing(GameResult::getUserTime);
 
-        Collections.sort(users, compare);
+        users.sort(Comparator.comparing(GameResult::getTriesCount)
+                        .thenComparing(GameResult::getUserTime));
 
         for (GameResult result : users) {
             System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
-                    result.name, result.triesCount, (result.userTime /1000.0));
+                    result.getName(), result.getTriesCount(), (result.getUserTime() /1000.0));
         }
         System.out.println("Goodbye !");
     }
@@ -107,7 +105,7 @@ public class Main {
     static String askPlayerName(String msg, int min, int max) {
         System.out.println(msg);
         while (true) {
-            String inputName = scn.nextLine();
+            String inputName = scn.next();
             String userName = inputName.replace(" ", "");
             int nameLength = userName.length();
 
