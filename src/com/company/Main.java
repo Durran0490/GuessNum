@@ -1,5 +1,6 @@
 package com.company;
 
+import java.lang.management.GarbageCollectorMXBean;
 import java.util.*;
 import java.io.*;
 
@@ -10,6 +11,9 @@ public class Main {
     static ArrayList<GameResult> users = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        loadResults();
+
         int numOfAttempts = 10;
 
         System.out.println("Hello and Welcome to the " + '"' + "GUESS THE NUMBER" + '"');
@@ -66,6 +70,26 @@ public class Main {
         System.out.println("Goodbye !");
     }
 
+    private static void loadResults() {
+        File file = new File("myfile.txt");
+        try (Scanner in = new Scanner(file)) {
+            while (in.hasNext()) {
+                GameResult r = new GameResult();
+                String name = in.next();
+                int tries = in.nextInt();
+                long time = in.nextLong();
+
+                r.setName(name);
+                r.setTriesCount(tries);
+                r.setUserTime(time);
+
+                users.add(r);
+            }
+        } catch (IOException e) {
+            System.out.println("Cannot read leader board");
+        }
+    }
+
     private static void showResults2() {
         users.stream()
                 .sorted(Comparator
@@ -84,10 +108,10 @@ public class Main {
                 .thenComparing(GameResult::getUserTime));
 
         for (GameResult result : users) {
-            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%f sec.\n",
+            System.out.printf("Nickname:%s \t\t Attempts:%d\t Time:%d sec.\n",
                     result.getName(),
                     result.getTriesCount(),
-                    result.getUserTime() / 1000.0);
+                    result.getUserTime());
         }
     }
 
@@ -147,12 +171,13 @@ public class Main {
         File file = new File("myfile.txt");
         try (PrintWriter out = new PrintWriter(file)) {
             for (GameResult result : users) {
-                out.printf("%s \t\t %d\t %f sec.\n",
+                out.printf(" %s %d %d ",
                         result.getName(),
                         result.getTriesCount(),
-                        result.getUserTime() / 1000.0);
+                        result.getUserTime());
             }
         } catch (IOException e) {
+            System.out.println("Cannot write in leader board");
         }
     }
 }
